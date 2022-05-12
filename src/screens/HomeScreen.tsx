@@ -4,7 +4,7 @@ import PageContainer from "../components/PageContainer";
 
 const HomeScreen = () => {
   return (
-    <PageContainer>
+    <PageContainer title="Главная">
       <Text>Мама привет!</Text>
     </PageContainer>
   );

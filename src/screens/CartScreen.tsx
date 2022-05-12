@@ -4,7 +4,7 @@ import PageContainer from "../components/PageContainer";
 
 const CartScreen = () => {
   return (
-    <PageContainer>
+    <PageContainer title="Инвентарь">
       <Text>CartScreen</Text>
     </PageContainer>
   );
