@@ -1,13 +1,15 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { COLORS, IMAGES } from "../constants";
+import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../constants";
 
 interface ProductItemProps {
   title: string;
   image: any;
   productCode: string;
   volume: string;
+  price: string;
+  withDevice?: boolean;
 }
 
 const ProductItem: FC<ProductItemProps> = ({
@@ -15,6 +17,8 @@ const ProductItem: FC<ProductItemProps> = ({
   image,
   productCode,
   volume,
+  price,
+  withDevice,
 }) => {
   return (
     <View style={styles.productItemContainer}>
@@ -24,6 +28,11 @@ const ProductItem: FC<ProductItemProps> = ({
       <View style={styles.productInfoContainer}>
         <View style={styles.top}>
           <Text style={styles.productCode}>Код продукта: #{productCode}</Text>
+          {withDevice && (
+            <View style={styles.chip}>
+              <Text style={styles.chipText}>+ аппарат</Text>
+            </View>
+          )}
         </View>
         <Text style={styles.productTitle} numberOfLines={2}>
           {title}
@@ -32,6 +41,10 @@ const ProductItem: FC<ProductItemProps> = ({
           <View style={styles.productVolume}>
             <SimpleLineIcons name="drop" size={16} color="#72777E" />
             <Text style={styles.volumeText}>{volume}</Text>
+          </View>
+          <View style={styles.productPrice}>
+            <Ionicons name="ios-pricetag-outline" size={16} color="#72777E" />
+            <Text style={styles.priceText}>{price} UZS</Text>
           </View>
         </View>
       </View>
@@ -48,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: COLORS.borderColor,
-    borderRadius: 5,
+    borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 16,
     flexDirection: "row",
@@ -64,10 +77,23 @@ const styles = StyleSheet.create({
   },
   productInfoContainer: {
     flex: 1,
-    marginLeft: 16,
+    marginLeft: 24,
     justifyContent: "space-between",
   },
-  top: {},
+  top: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  chip: {
+    backgroundColor: COLORS.accent,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+  chipText: {
+    color: COLORS.white,
+    fontSize: 12,
+  },
   productCode: {
     color: COLORS.accent,
     fontSize: 12,
@@ -78,14 +104,24 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   productVolume: {
     flexDirection: "row",
+  },
+  productPrice: {
+    flexDirection: "row",
+  },
+  priceText: {
+    fontSize: 12,
+    color: COLORS.textLight,
+    fontWeight: "700",
+    marginLeft: 3,
   },
   volumeText: {
     fontSize: 12,
     color: COLORS.textLight,
     fontWeight: "700",
-    marginLeft: 2,
+    marginLeft: 3,
   },
 });

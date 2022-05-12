@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 
@@ -10,6 +10,8 @@ import { COLORS } from "../constants";
 const Tab = createBottomTabNavigator();
 
 const NavigationTabs = () => {
+  const { height } = useWindowDimensions();
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -19,7 +21,7 @@ const NavigationTabs = () => {
         tabBarStyle: {
           position: "absolute",
           right: 20,
-          bottom: 25,
+          bottom: height * 0.03,
           left: 20,
           elevation: 0,
           backgroundColor: COLORS.white,
@@ -28,7 +30,7 @@ const NavigationTabs = () => {
           borderTopWidth: 1,
           borderTopColor: COLORS.borderColor,
           borderRadius: 15,
-          height: 70,
+          height: height * 0.085,
           paddingBottom: 10,
         },
 
@@ -52,7 +54,7 @@ const NavigationTabs = () => {
           return <Feather name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: COLORS.accent,
-        tabBarInactiveTintColor: "gray",
+        tabBarInactiveTintColor: COLORS.textLight,
       })}
     >
       <Tab.Screen

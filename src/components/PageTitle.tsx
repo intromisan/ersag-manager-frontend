@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
+import { COLORS } from "../constants";
 
 interface PageTitleProps {
   title: string;
@@ -21,5 +22,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    fontWeight: "700",
+    color: COLORS.headlineColor,
   },
 });

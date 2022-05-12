@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingBottom: 120,
+    paddingBottom: height * 0.13,
     backgroundColor: COLORS.white,
   },
   innerContainer: {
     flex: 1,
-    maxHeight: height - 120,
+    // maxHeight: height - height * 0.1,
   },
 });
