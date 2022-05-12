@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { StyleSheet, Text } from "react-native";
+import PageContainer from "../components/PageContainer";
 
 const CatalogScreen = () => {
   return (
-    <View>
+    <PageContainer>
       <Text>CatalogScreen</Text>
-    </View>
+    </PageContainer>
   );
 };
 

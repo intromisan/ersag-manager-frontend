@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
 import PageContainer from "../components/PageContainer";
 
-const HomeScreen = () => {
+const CartScreen = () => {
   return (
     <PageContainer>
-      <Text>Мама привет!</Text>
+      <Text>CartScreen</Text>
     </PageContainer>
   );
 };
 
-export default HomeScreen;
+export default CartScreen;
 
 const styles = StyleSheet.create({});

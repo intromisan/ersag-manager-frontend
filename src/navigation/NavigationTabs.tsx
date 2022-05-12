@@ -4,10 +4,8 @@ import { Feather } from "@expo/vector-icons";
 
 import HomeScreen from "../screens/HomeScreen";
 import CatalogScreen from "../screens/CatalogScreen";
-// import RemindersScreen from "../screens/RemindersScreen";
-// import DiscoverScreen from "../screens/DiscoverScreen";
-// import AccountScreen from "../screens/AccountScreen";
-// import { COLORS } from "../constants";
+import CartScreen from "../screens/CartScreen";
+import { COLORS } from "../constants";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +14,7 @@ const NavigationTabs = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => ({
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         headerShown: false,
         tabBarStyle: {
           position: "absolute",
@@ -27,37 +25,50 @@ const NavigationTabs = () => {
           backgroundColor: "#ffffff",
           borderRadius: 15,
           height: 70,
-          paddingBottom: 0,
+          paddingBottom: 10,
         },
+
         tabBarIcon: ({ color, size }) => {
-          let iconName: "home" | "bell" | "search" | "user" | undefined =
-            undefined;
+          let iconName:
+            | "home"
+            | "shopping-cart"
+            | "book-open"
+            | "user"
+            | undefined = undefined;
           if (route.name === "Home") {
             iconName = "home";
-          } else if (route.name === "Reminders") {
-            iconName = "bell";
+          } else if (route.name === "Cart") {
+            iconName = "shopping-cart";
           } else if (route.name === "Catalog") {
-            iconName = "search";
+            iconName = "book-open";
           } else if (route.name === "Account") {
             iconName = "user";
           }
 
           return <Feather name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: COLORS.accent,
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      {/* <Tab.Screen name="Reminders" component={RemindersScreen} /> */}
+      <Tab.Screen
+        name="Home"
+        options={{ title: "Главная" }}
+        component={HomeScreen}
+      />
       {/* <Tab.Screen name="Discover" component={DiscoverScreen} /> */}
-      <Tab.Screen name="Catalog" component={CatalogScreen} />
+      <Tab.Screen
+        name="Catalog"
+        options={{ title: "Каталог" }}
+        component={CatalogScreen}
+      />
+      <Tab.Screen
+        name="Cart"
+        options={{ title: "Инвентарь" }}
+        component={CartScreen}
+      />
     </Tab.Navigator>
   );
 };
 
 export default NavigationTabs;
-
-const style = StyleSheet.create({
-  tabNavigation: {},
-});
