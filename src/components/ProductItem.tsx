@@ -2,40 +2,34 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants";
+import { Product } from "../interfaces";
 
-interface ProductItemProps {
-  title: string;
-  image: any;
-  productCode: string;
-  volume: string;
-  price: string;
-  withDevice?: boolean;
-}
-
-const ProductItem: FC<ProductItemProps> = ({
-  title,
+const ProductItem: FC<Product> = ({
+  name,
   image,
-  productCode,
+  code,
   volume,
   price,
   withDevice,
 }) => {
+  console.log(name);
+
   return (
     <View style={styles.productItemContainer}>
       <View style={styles.productImageContainer}>
-        <Image source={image} style={styles.productImage} />
+        <Image source={{ uri: image }} style={styles.productImage} />
       </View>
       <View style={styles.productInfoContainer}>
         <View style={styles.top}>
-          <Text style={styles.productCode}>Код продукта: #{productCode}</Text>
-          {withDevice && (
+          <Text style={styles.code}>Код продукта: #{code}</Text>
+          {withDevice ? (
             <View style={styles.chip}>
               <Text style={styles.chipText}>+ аппарат</Text>
             </View>
-          )}
+          ) : null}
         </View>
         <Text style={styles.productTitle} numberOfLines={2}>
-          {title}
+          {name}
         </Text>
         <View style={styles.bottom}>
           <View style={styles.productVolume}>
@@ -94,7 +88,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 12,
   },
-  productCode: {
+  code: {
     color: COLORS.accent,
     fontSize: 12,
   },

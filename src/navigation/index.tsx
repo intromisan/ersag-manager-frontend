@@ -3,7 +3,6 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
-import CatalogScreen from "../screens/CatalogScreen";
 import NavigationTabs from "./NavigationTabs";
 import SignUpScreen from "../screens/SignUpScreen";
 import SignInScreen from "../screens/SignInScreen";
