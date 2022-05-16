@@ -1,5 +1,3 @@
-import { ThunkDispatch } from "@reduxjs/toolkit";
-
 export interface Product {
   _id: string;
   name: string;

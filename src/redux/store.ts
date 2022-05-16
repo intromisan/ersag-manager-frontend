@@ -1,15 +1,16 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { productsApi } from "../services/products";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { productsApi } from '../services/products';
+import UserReducer from './slices/userSlice';
 
 const rootReducer = combineReducers({
-  [productsApi.reducerPath]: productsApi.reducer,
+  user: UserReducer,
+  [productsApi.reducerPath]: productsApi.reducer
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(productsApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productsApi.middleware)
   });
 };
 
@@ -17,4 +18,4 @@ export const setupStore = () => {
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = AppStore["dispatch"];
+export type AppDispatch = AppStore['dispatch'];
