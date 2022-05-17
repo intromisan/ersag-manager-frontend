@@ -7,3 +7,8 @@ export interface Product {
   withDevice?: boolean;
   image?: string;
 }
+
+export interface IUser {
+  uid: string;
+  name: string;
+}
