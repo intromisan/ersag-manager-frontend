@@ -1,8 +1,6 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { COLORS } from '../constants';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
 import { useAppDispatch } from '../utils/hooks';
 import { onSignIn, onSignOut } from '../redux/slices/userSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,36 +14,8 @@ const SignInScreen = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token = await user.getIdToken();
-        await AsyncStorage.setItem('@fire_token', token);
-        dispatch(onSignIn(token));
-      } else {
-        await AsyncStorage.removeItem('@fire_token');
-        dispatch(onSignOut());
-      }
-    });
-  }, []);
-
-  const handleSignUp = async () => {
-    try {
-      createUserWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSingIn = async () => {
-    try {
-      signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
+    // <KeyboardAvoidingView style={styles.container}>
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
@@ -67,10 +37,10 @@ const SignInScreen = () => {
         />
       </View>
       <View style={styles.buttonTooltip}>
-        <Pressable style={styles.button} onPress={handleSingIn}>
+        <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>
-        <Pressable style={[styles.button, styles.buttonOutline]} onPress={handleSignUp}>
+        <Pressable style={[styles.button, styles.buttonOutline]}>
           <Text style={styles.buttonOutlineText}>Register</Text>
         </Pressable>
       </View>

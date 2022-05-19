@@ -9,6 +9,8 @@ export interface Product {
 }
 
 export interface IUser {
-  uid: string;
+  email: string;
   name: string;
+  password: string;
+  passwordConfirmation: string;
 }

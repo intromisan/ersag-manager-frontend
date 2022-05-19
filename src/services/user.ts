@@ -7,10 +7,17 @@ export const userApi = createApi({
   baseQuery: baseQuery,
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    getUsers: builder.query<IUser, void>({
-      query: () => '/users'
+    createUser: builder.mutation<IUser, IUser>({
+      query: (body) => ({
+        url: '/users',
+        method: 'POST',
+        body: body
+      })
+    }),
+    getHealth: builder.query<any, void>({
+      query: () => '/healthcheck'
     })
   })
 });
 
-export const { useGetUsersQuery } = userApi;
+export const { useCreateUserMutation, useGetHealthQuery } = userApi;

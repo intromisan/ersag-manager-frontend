@@ -19,8 +19,8 @@ const AppNavigation = () => {
           <Stack.Screen name="App" component={NavigationTabs} />
         ) : (
           <>
-            <Stack.Screen name="SingIn" component={SignInScreen} />
-            {/* <Stack.Screen name="SingUp" component={SignUpScreen} /> */}
+            {/* <Stack.Screen name="SingIn" component={SignInScreen} /> */}
+            <Stack.Screen name="SingUp" component={SignUpScreen} />
           </>
         )}
       </Stack.Navigator>
