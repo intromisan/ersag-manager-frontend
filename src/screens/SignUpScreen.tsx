@@ -19,7 +19,6 @@ const SignUpScreen = () => {
   // RTK Queries
   const [createUser, { isLoading: isUpdating }] = useCreateUserMutation();
   const { data: health } = useGetHealthQuery();
-  console.log(health);
 
   return isUpdating ? (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

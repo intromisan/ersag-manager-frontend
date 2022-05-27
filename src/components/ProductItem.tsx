@@ -1,19 +1,10 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React, { FC } from "react";
-import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../constants";
-import { Product } from "../interfaces";
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { FC } from 'react';
+import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants';
+import { Product } from '../interfaces';
 
-const ProductItem: FC<Product> = ({
-  name,
-  image,
-  code,
-  volume,
-  price,
-  withDevice,
-}) => {
-  console.log(name);
-
+const ProductItem: FC<Product> = ({ name, image, code, volume, price, withDevice }) => {
   return (
     <View style={styles.productItemContainer}>
       <View style={styles.productImageContainer}>
@@ -58,64 +49,64 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   productImageContainer: {
     width: 70,
-    height: "auto",
+    height: 'auto'
   },
   productImage: {
     flex: 1,
     height: undefined,
-    width: undefined,
+    width: undefined
   },
   productInfoContainer: {
     flex: 1,
     marginLeft: 24,
-    justifyContent: "space-between",
+    justifyContent: 'space-between'
   },
   top: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   chip: {
     backgroundColor: COLORS.accent,
     paddingHorizontal: 7,
     paddingVertical: 2,
-    borderRadius: 10,
+    borderRadius: 10
   },
   chipText: {
     color: COLORS.white,
-    fontSize: 12,
+    fontSize: 12
   },
   code: {
     color: COLORS.accent,
-    fontSize: 12,
+    fontSize: 12
   },
   productTitle: {
     fontSize: 18,
-    fontWeight: "700",
+    fontWeight: '700'
   },
   bottom: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   productVolume: {
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   productPrice: {
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   priceText: {
     fontSize: 12,
     color: COLORS.textLight,
-    fontWeight: "700",
-    marginLeft: 3,
+    fontWeight: '700',
+    marginLeft: 3
   },
   volumeText: {
     fontSize: 12,
     color: COLORS.textLight,
-    fontWeight: "700",
-    marginLeft: 3,
-  },
+    fontWeight: '700',
+    marginLeft: 3
+  }
 });

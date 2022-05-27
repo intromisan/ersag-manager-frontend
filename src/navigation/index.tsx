@@ -15,7 +15,8 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {userToken !== null ? (
+        {/* {userToken !== null ? ( */}
+        {true ? (
           <Stack.Screen name="App" component={NavigationTabs} />
         ) : (
           <>
