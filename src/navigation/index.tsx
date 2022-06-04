@@ -15,13 +15,12 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* {userToken !== null ? ( */}
-        {true ? (
+        {userToken !== null ? (
           <Stack.Screen name="App" component={NavigationTabs} />
         ) : (
           <>
-            {/* <Stack.Screen name="SingIn" component={SignInScreen} /> */}
-            <Stack.Screen name="SingUp" component={SignUpScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
           </>
         )}
       </Stack.Navigator>

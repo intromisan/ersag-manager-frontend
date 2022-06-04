@@ -1,9 +1,11 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { COLORS } from '../constants';
 import { useAppDispatch } from '../utils/hooks';
-import { onSignIn, onSignOut } from '../redux/slices/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { PrimaryButton } from '../components/Button';
+import { useCreateUserSessionMutation } from '../services/user';
+import { onSignIn } from '../redux/slices/userSlice';
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -12,14 +14,23 @@ const SignInScreen = () => {
   const [emailBorderColor, setEmailBorderColor] = useState(COLORS.borderColor);
   const [passwordBorderColor, setPasswordBorderColor] = useState(COLORS.borderColor);
 
+  const [createUserSession] = useCreateUserSessionMutation();
+
   const dispatch = useAppDispatch();
+
+  const onSubmit = async () => {
+    const session = await createUserSession({ email, password }).unwrap();
+    dispatch(onSignIn(session.accessToken));
+  };
+
+  const navigation = useNavigation();
 
   return (
     // <KeyboardAvoidingView style={styles.container}>
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder="Электронная почта"
           style={{ ...styles.input, borderColor: emailBorderColor }}
           onFocus={() => setEmailBorderColor(COLORS.accent)}
           onBlur={() => setEmailBorderColor(COLORS.borderColor)}
@@ -27,7 +38,7 @@ const SignInScreen = () => {
           onChangeText={(text) => setEmail(text)}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Пароль"
           secureTextEntry
           style={{ ...styles.input, borderColor: passwordBorderColor }}
           onFocus={() => setPasswordBorderColor(COLORS.accent)}
@@ -37,12 +48,13 @@ const SignInScreen = () => {
         />
       </View>
       <View style={styles.buttonTooltip}>
-        <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.buttonOutline]}>
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </Pressable>
+        <PrimaryButton text="Войти" pressHandler={() => onSubmit()} />
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginOuterText}>У вас нет аккаунта?</Text>
+          <Pressable style={styles.loginInnerContainer} onPress={() => navigation.navigate('SignUp' as never)}>
+            <Text style={[styles.loginOuterText, styles.loginInnerText]}>Зарегистрироваться</Text>
+          </Pressable>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -73,27 +85,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40
   },
-  button: {
-    backgroundColor: COLORS.accent,
-    width: '100%',
-    padding: 15,
-    borderRadius: 3,
-    alignItems: 'center'
+  loginContainer: {
+    flexDirection: 'row',
+    marginTop: 10
   },
-  buttonText: {
-    color: COLORS.white,
-    fontWeight: '700',
-    fontSize: 16
+  loginOuterText: {
+    color: COLORS.textLight
   },
-  buttonOutline: {
-    backgroundColor: COLORS.white,
-    borderWidth: 2,
-    borderColor: COLORS.accent,
-    marginTop: 5
+  loginInnerContainer: {
+    marginLeft: 5
   },
-  buttonOutlineText: {
-    color: COLORS.accent,
-    fontWeight: '700',
-    fontSize: 16
+  loginInnerText: {
+    color: COLORS.accent
   }
 });

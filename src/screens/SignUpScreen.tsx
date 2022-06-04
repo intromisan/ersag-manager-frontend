@@ -1,9 +1,9 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants';
 import { PrimaryButton } from '../components/Button';
-import { useCreateUserMutation, useGetHealthQuery } from '../services/user';
+import { useCreateUserMutation } from '../services/user';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,18 @@ const SignUpScreen = () => {
 
   // RTK Queries
   const [createUser, { isLoading: isUpdating }] = useCreateUserMutation();
-  const { data: health } = useGetHealthQuery();
+
+  const navigation = useNavigation();
+
+  const onSubmit = () => {
+    const signUpData = {
+      email,
+      password,
+      name,
+      passwordConfirmation
+    };
+    createUser(signUpData);
+  };
 
   return isUpdating ? (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -63,7 +74,13 @@ const SignUpScreen = () => {
         />
       </View>
       <View style={styles.buttonTooltip}>
-        <PrimaryButton text="Зарегистрироваться" pressHandler={() => createUser({ name, email, password, passwordConfirmation })} />
+        <PrimaryButton text="Зарегистрироваться" pressHandler={() => onSubmit()} />
+      </View>
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginOuterText}>У вас уже есть аккаунт?</Text>
+        <Pressable style={styles.loginInnerContainer} onPress={() => navigation.navigate('SignIn' as never)}>
+          <Text style={[styles.loginOuterText, styles.loginInnerText]}>Войти</Text>
+        </Pressable>
       </View>
     </KeyboardAvoidingView>
   );
@@ -100,5 +117,19 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 3,
     alignItems: 'center'
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  loginOuterText: {
+    // fontSize: 13
+    color: COLORS.textLight
+  },
+  loginInnerContainer: {
+    marginLeft: 5
+  },
+  loginInnerText: {
+    color: COLORS.accent
   }
 });

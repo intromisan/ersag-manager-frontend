@@ -2,7 +2,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../redux/store';
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5001/api',
+  baseUrl: 'https://ersag-manager.azurewebsites.net/api',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).user.userToken;
 

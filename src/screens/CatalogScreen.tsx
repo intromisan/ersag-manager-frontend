@@ -68,7 +68,7 @@ const CatalogScreen = () => {
   return (
     <PageContainer title={'Каталог'}>
       <SearchComponent />
-      {isLoading ? <Text>Loading</Text> : <FlatList showsVerticalScrollIndicator={false} data={tempData} keyExtractor={(item) => item._id} renderItem={({ item }) => <ProductItem {...item} />} />}
+      {isLoading ? <Text>Loading</Text> : <FlatList showsVerticalScrollIndicator={false} data={products} keyExtractor={(item) => item._id} renderItem={({ item }) => <ProductItem {...item} />} />}
     </PageContainer>
   );
 };

@@ -1,23 +1,27 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import { IUser } from '../interfaces';
+import { IUserSession, IUser } from '../interfaces/User';
 import { baseQuery } from './baseQuery';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: baseQuery,
   tagTypes: ['User'],
-  endpoints: (builder) => ({
-    createUser: builder.mutation<IUser, IUser>({
+  endpoints: (build) => ({
+    createUser: build.mutation<IUser, IUser>({
       query: (body) => ({
         url: '/users',
         method: 'POST',
         body: body
       })
     }),
-    getHealth: builder.query<any, void>({
-      query: () => '/healthcheck'
+    createUserSession: build.mutation<IUserSession, Partial<IUser>>({
+      query: (body) => ({
+        url: '/sessions',
+        method: 'POST',
+        body: body
+      })
     })
   })
 });
 
-export const { useCreateUserMutation, useGetHealthQuery } = userApi;
+export const { useCreateUserMutation, useCreateUserSessionMutation } = userApi;

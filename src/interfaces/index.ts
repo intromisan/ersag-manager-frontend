@@ -7,10 +7,3 @@ export interface Product {
   withDevice?: boolean;
   image?: string;
 }
-
-export interface IUser {
-  email: string;
-  name: string;
-  password: string;
-  passwordConfirmation: string;
-}
