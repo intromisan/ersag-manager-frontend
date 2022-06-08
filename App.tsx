@@ -1,8 +1,7 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { Provider } from "react-redux";
-import AppNavigation from "./src/navigation";
-import { setupStore } from "./src/redux/store";
+import 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import AppNavigation from './src/navigation';
+import { setupStore } from './src/redux/store';
 
 const store = setupStore();
 

@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { financesApi } from '../services/finances';
+import { inventoryApi } from '../services/inventory';
 import { productsApi } from '../services/products';
 import { userApi } from '../services/user';
 import UserReducer from './slices/userSlice';
@@ -6,13 +8,21 @@ import UserReducer from './slices/userSlice';
 const rootReducer = combineReducers({
   user: UserReducer,
   [productsApi.reducerPath]: productsApi.reducer,
-  [userApi.reducerPath]: userApi.reducer
+  [userApi.reducerPath]: userApi.reducer,
+  // [financesApi.reducerPath]: financesApi.reducer,
+  [inventoryApi.reducerPath]: inventoryApi.reducer
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productsApi.middleware, userApi.middleware)
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(
+        productsApi.middleware,
+        userApi.middleware,
+        //  financesApi.middleware,
+        inventoryApi.middleware
+      )
   });
 };
 

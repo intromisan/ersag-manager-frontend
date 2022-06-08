@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
 import { COLORS } from '../constants';
 import { numberWithCommas } from '../utils/masks';
@@ -7,7 +7,7 @@ interface FinanceInfoCardProps {
   index: number;
   header: string;
   subheader: string;
-  number: number;
+  number?: number;
   numberMark: string;
 }
 
@@ -24,7 +24,7 @@ const FinanceInfoCard: FC<FinanceInfoCardProps> = ({ index, header, subheader, n
       </View>
       <View style={styles.numberContainer}>
         <Text style={styles.number}>
-          {numberWithCommas(number)} {numberMark}
+          {number && numberWithCommas(number)} {numberMark}
         </Text>
       </View>
     </View>

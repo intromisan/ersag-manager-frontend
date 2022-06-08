@@ -14,7 +14,7 @@ const SignInScreen = () => {
   const [emailBorderColor, setEmailBorderColor] = useState(COLORS.borderColor);
   const [passwordBorderColor, setPasswordBorderColor] = useState(COLORS.borderColor);
 
-  const [createUserSession] = useCreateUserSessionMutation();
+  const [createUserSession, { isError }] = useCreateUserSessionMutation();
 
   const dispatch = useAppDispatch();
 
@@ -47,6 +47,11 @@ const SignInScreen = () => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
+      {isError && (
+        <View style={styles.loginErrorContainer}>
+          <Text style={styles.loginErrorText}>Вы ввели не правильный адрес или пароль</Text>
+        </View>
+      )}
       <View style={styles.buttonTooltip}>
         <PrimaryButton text="Войти" pressHandler={() => onSubmit()} />
         <View style={styles.loginContainer}>
@@ -96,6 +101,13 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   loginInnerText: {
+    color: COLORS.accent
+  },
+  loginErrorContainer: {
+    marginTop: 10
+  },
+  loginErrorText: {
+    fontSize: 12,
     color: COLORS.accent
   }
 });
