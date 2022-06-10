@@ -2,7 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import PageContainer from '../components/PageContainer';
 import FinanceInfoCard from '../components/FinanceInfoCard';
-import { useGetFinanceQuery } from '../services/inventory';
+import { useGetFinanceQuery } from '../services/finances';
 
 const HomeScreen = () => {
   const { data: finances } = useGetFinanceQuery();

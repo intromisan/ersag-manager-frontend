@@ -1,17 +1,14 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
 import { Product } from '../interfaces';
-import { baseQuery } from './baseQuery';
+import { appApi } from './appApi';
 
-export const productsApi = createApi({
-  reducerPath: 'productsApi',
-  baseQuery: baseQuery,
-  tagTypes: ['Products'],
+export const productsApi = appApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query<Product[], void>({
       query: () => '/products',
       providesTags: ['Products']
     })
-  })
+  }),
+  overrideExisting: false
 });
 
 export const { useGetProductsQuery } = productsApi;

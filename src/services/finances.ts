@@ -1,11 +1,7 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { IFinance } from '../interfaces/finance';
-import { baseQuery } from './baseQuery';
+import { appApi } from './appApi';
 
-export const financesApi = createApi({
-  reducerPath: 'financesApi',
-  baseQuery: baseQuery,
-  tagTypes: ['Finances'],
+export const financesApi = appApi.injectEndpoints({
   endpoints: (build) => ({
     getFinance: build.query<IFinance, void>({
       query: () => '/finance',
