@@ -1,14 +1,21 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from '../redux/store';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: 'https://ersag-manager.azurewebsites.net/api',
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).user.userToken;
+  prepareHeaders: async (headers, { getState }) => {
+    const accessToken = await AsyncStorage.getItem('accessToken');
 
-    if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+    if (accessToken) {
+      headers.set('authorization', `Bearer ${accessToken}`);
     }
+
+    const refreshToken = await AsyncStorage.getItem('refreshToken');
+
+    if (refreshToken) {
+      headers.set('x-refresh', refreshToken);
+    }
+
     return headers;
   }
 });

@@ -1,14 +1,26 @@
 import { StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavigationTabs from './NavigationTabs';
 import SignUpScreen from '../screens/SignUpScreen';
 import SignInScreen from '../screens/SignInScreen';
-import { useAppSelector } from '../utils/hooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AppNavigation = () => {
-  const userToken = useAppSelector((state) => state.user.userToken);
+  const [userToken, setUserToken] = useState<string | null>(null);
+  const getUserToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      setUserToken(token);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getUserToken();
+  }, [userToken]);
 
   const Stack = createNativeStackNavigator();
 

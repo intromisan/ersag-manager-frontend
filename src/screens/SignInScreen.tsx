@@ -1,8 +1,9 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
-import { COLORS } from '../constants';
-import { useAppDispatch } from '../utils/hooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+
+import { COLORS } from '../constants';
 import { PrimaryButton } from '../components/Button';
 import { useCreateUserSessionMutation } from '../services/user';
 import { onSignIn } from '../redux/slices/userSlice';
@@ -16,11 +17,10 @@ const SignInScreen = () => {
 
   const [createUserSession, { isError }] = useCreateUserSessionMutation();
 
-  const dispatch = useAppDispatch();
-
   const onSubmit = async () => {
     const session = await createUserSession({ email, password }).unwrap();
-    dispatch(onSignIn(session.accessToken));
+    await AsyncStorage.setItem('accessToken', session.accessToken);
+    await AsyncStorage.setItem('refreshToken', session.refreshToken);
   };
 
   const navigation = useNavigation();
