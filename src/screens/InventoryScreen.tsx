@@ -24,8 +24,8 @@ const InventoryScreen = () => {
           data={inventory?.products}
           keyExtractor={(item) => item._id}
           ItemSeparatorComponent={ListSeparator}
-          renderItem={({ item: { product, itemAmount }, index }) => {
-            return <InventoryItem title={product.name} imgUrl={product.image} itemAmount={itemAmount} price={product.price} code={product.code} />;
+          renderItem={({ item: { product, itemAmount } }) => {
+            return <InventoryItem title={product.name} productId={product.productId} imgUrl={product.image} itemAmount={itemAmount} price={product.price} code={product.code} />;
           }}
         />
       )}

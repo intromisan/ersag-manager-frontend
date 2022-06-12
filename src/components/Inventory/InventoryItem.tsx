@@ -2,6 +2,7 @@ import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-nati
 import React, { FC } from 'react';
 import { COLORS } from '../../constants';
 import { numberWithCommas } from '../../utils/masks';
+import { useRemoveItemsFromInventoryMutation } from '../../services/inventory';
 
 interface InventoryItemProps {
   title: string;
@@ -9,11 +10,23 @@ interface InventoryItemProps {
   itemAmount: number;
   code: string;
   price: string;
+  productId: string;
 }
 
 const { width: screenWidth } = Dimensions.get('screen');
 
-const InventoryItem: FC<InventoryItemProps> = ({ title, imgUrl, itemAmount, code, price }) => {
+const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, itemAmount, code, price }) => {
+  const [removeItemsFromInventory] = useRemoveItemsFromInventoryMutation();
+
+  const deleteProductHandler = () => {
+    const payload = {
+      productId,
+      itemAmount,
+      isDelete: true
+    };
+    removeItemsFromInventory(payload);
+  };
+
   return (
     <View style={styles.inventoryItemContainer}>
       <View style={styles.imageContainer}>
@@ -40,7 +53,7 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, imgUrl, itemAmount, code
               <Text style={styles.buttonText}>Изменить</Text>
             </View>
           </Pressable>
-          <Pressable>
+          <Pressable onPress={deleteProductHandler}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Удалить</Text>
             </View>
