@@ -71,11 +71,10 @@ const styles = StyleSheet.create({
     height: 160,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingVertical: 20
   },
   imageContainer: {
-    width: 50,
+    width: 80,
     height: 'auto'
   },
   image: {
