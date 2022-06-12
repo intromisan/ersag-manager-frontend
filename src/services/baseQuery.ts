@@ -3,7 +3,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: 'https://ersag-manager.azurewebsites.net/api',
-  prepareHeaders: async (headers, { getState }) => {
+  prepareHeaders: async (headers) => {
     const accessToken = await AsyncStorage.getItem('accessToken');
 
     if (accessToken) {

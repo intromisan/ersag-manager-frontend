@@ -6,13 +6,17 @@ import NavigationTabs from './NavigationTabs';
 import SignUpScreen from '../screens/SignUpScreen';
 import SignInScreen from '../screens/SignInScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAppDispatch, useAppSelector } from '../utils/hooks';
+import { onSignIn } from '../redux/slices/userSlice';
 
 const AppNavigation = () => {
-  const [userToken, setUserToken] = useState<string | null>(null);
+  // const [userToken, setUserToken] = useState<string | null>(null);
+  const { userToken } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const getUserToken = async () => {
     try {
       const token = await AsyncStorage.getItem('accessToken');
-      setUserToken(token);
+      if (token) dispatch(onSignIn(token));
     } catch (error: any) {
       console.error(error.message);
     }

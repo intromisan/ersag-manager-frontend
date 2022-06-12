@@ -18,7 +18,7 @@ const PrimaryButton: FC<ButtonProps> = ({ text, pressHandler }) => {
 const OutlineButton: FC<ButtonProps> = ({ text, pressHandler }) => {
   return (
     <Pressable onPress={pressHandler} style={[styles.buttonPrimary, styles.buttonOutline]}>
-      <Text style={[styles.buttonPrimary, styles.buttonOutline]}>{text}</Text>
+      <Text style={[styles.buttonPrimaryText, styles.buttonOutlineText]}>{text}</Text>
     </Pressable>
   );
 };
@@ -28,7 +28,6 @@ export { PrimaryButton, OutlineButton };
 const styles = StyleSheet.create({
   buttonPrimary: {
     backgroundColor: COLORS.accent,
-    width: '100%',
     padding: 15,
     borderRadius: 3,
     alignItems: 'center'

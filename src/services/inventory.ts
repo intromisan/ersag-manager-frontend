@@ -1,10 +1,10 @@
 import { IFinance } from '../interfaces/finance';
-import { IAddOneItemPayload } from '../interfaces/inventory';
+import { IAddOneItemPayload, IInventory } from '../interfaces/inventory';
 import { appApi } from './appApi';
 
 export const inventoryApi = appApi.injectEndpoints({
   endpoints: (build) => ({
-    getInventoryItems: build.query<any, void>({
+    getInventoryItems: build.query<IInventory, void>({
       query: () => '/userInventory',
       providesTags: ['Inventory']
     }),

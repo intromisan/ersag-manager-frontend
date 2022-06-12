@@ -1,10 +1,15 @@
-import { FlatList, ScrollView, StyleSheet, Text } from 'react-native';
+import { FlatList, ImageEditor, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import PageContainer from '../components/PageContainer';
 import SearchComponent from '../components/SearchComponent';
 import { useGetInventoryItemsQuery } from '../services/inventory';
+import InventoryItem from '../components/Inventory/InventoryItem';
 
-const CartScreen = () => {
+const ListSeparator = () => {
+  return <View style={{ height: 1, width: '100%', backgroundColor: '#000000' }} />;
+};
+
+const InventoryScreen = () => {
   // RTK Queries
   const { data: inventory, isLoading } = useGetInventoryItemsQuery();
 
@@ -16,10 +21,11 @@ const CartScreen = () => {
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={inventory.products}
+          data={inventory?.products}
           keyExtractor={(item) => item._id}
-          renderItem={({ item, index }) => {
-            return <Text>{`${item.product.name} (${item.itemAmount}x)`}</Text>;
+          ItemSeparatorComponent={ListSeparator}
+          renderItem={({ item: { product, itemAmount }, index }) => {
+            return <InventoryItem title={product.name} imgUrl={product.image} itemAmount={itemAmount} price={product.price} code={product.code} />;
           }}
         />
       )}
@@ -27,6 +33,6 @@ const CartScreen = () => {
   );
 };
 
-export default CartScreen;
+export default InventoryScreen;
 
 const styles = StyleSheet.create({});

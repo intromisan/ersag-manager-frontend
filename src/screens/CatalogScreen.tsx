@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
 import PageContainer from '../components/PageContainer';
-import ProductItem from '../components/ProductItem';
+import ProductItem from '../components/Catalog/ProductItem';
 import SearchComponent from '../components/SearchComponent';
 import { useGetProductsQuery } from '../services/products';
 

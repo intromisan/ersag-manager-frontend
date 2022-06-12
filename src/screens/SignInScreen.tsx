@@ -7,6 +7,7 @@ import { COLORS } from '../constants';
 import { PrimaryButton } from '../components/Button';
 import { useCreateUserSessionMutation } from '../services/user';
 import { onSignIn } from '../redux/slices/userSlice';
+import { useAppDispatch } from '../utils/hooks';
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,10 +18,13 @@ const SignInScreen = () => {
 
   const [createUserSession, { isError }] = useCreateUserSessionMutation();
 
+  const dispatch = useAppDispatch();
+
   const onSubmit = async () => {
     const session = await createUserSession({ email, password }).unwrap();
     await AsyncStorage.setItem('accessToken', session.accessToken);
     await AsyncStorage.setItem('refreshToken', session.refreshToken);
+    dispatch(onSignIn(session.accessToken));
   };
 
   const navigation = useNavigation();

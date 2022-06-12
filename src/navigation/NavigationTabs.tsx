@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
-import CartScreen from '../screens/CartScreen';
+import InventoryScreen from '../screens/InventoryScreen';
 import { COLORS } from '../constants';
 
 const Tab = createBottomTabNavigator();
@@ -55,7 +55,7 @@ const NavigationTabs = () => {
       <Tab.Screen name="Home" options={{ title: 'Главная' }} component={HomeScreen} />
       {/* <Tab.Screen name="Discover" component={DiscoverScreen} /> */}
       <Tab.Screen name="Catalog" options={{ title: 'Каталог' }} component={CatalogScreen} />
-      <Tab.Screen name="Cart" options={{ title: 'Инвентарь' }} component={CartScreen} />
+      <Tab.Screen name="Cart" options={{ title: 'Инвентарь' }} component={InventoryScreen} />
     </Tab.Navigator>
   );
 };

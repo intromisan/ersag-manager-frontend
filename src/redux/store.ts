@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { appApi } from '../services/appApi';
+import { unauthorisedError } from '../services/unauthorisedError';
 import { userApi } from '../services/user';
 import UserReducer from './slices/userSlice';
 
@@ -12,7 +13,7 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware, appApi.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware, appApi.middleware, unauthorisedError)
   });
 };
 

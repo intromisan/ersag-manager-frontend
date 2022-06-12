@@ -1,7 +1,7 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
-import { COLORS } from '../constants';
-import { numberWithCommas } from '../utils/masks';
+import { COLORS } from '../../constants';
+import { numberWithCommas } from '../../utils/masks';
 
 interface FinanceInfoCardProps {
   index: number;
