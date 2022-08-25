@@ -1,4 +1,4 @@
-import { FlatList, ImageEditor, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import PageContainer from '../components/PageContainer';
 import SearchComponent from '../components/SearchComponent';
@@ -21,11 +21,11 @@ const InventoryScreen = () => {
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={inventory?.products}
-          keyExtractor={(item) => item._id}
+          data={inventory}
+          keyExtractor={(item) => item.id}
           ItemSeparatorComponent={ListSeparator}
-          renderItem={({ item: { product, itemAmount } }) => {
-            return <InventoryItem title={product.name} productId={product.productId} imgUrl={product.image} itemAmount={itemAmount} price={product.price} code={product.code} />;
+          renderItem={({ item: { product, quantity } }) => {
+            return <InventoryItem title={product.name} productId={product.id} imgUrl={product.image} quantity={quantity} price={product.price} code={product.code} />;
           }}
         />
       )}

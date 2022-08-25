@@ -1,6 +1,6 @@
 export interface IUserSession {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  // refreshToken: string;
 }
 
 export interface IUser {

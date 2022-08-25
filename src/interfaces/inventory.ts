@@ -2,23 +2,18 @@ import { IProduct } from './product';
 
 export interface IAddOneItemPayload {
   productId: string;
-  itemAmount: number;
+  quantity: number;
 }
 
 export interface IRemoveItemsPayload {
   productId: string;
-  itemAmount: number;
+  quantity: number;
   isPresent?: boolean;
   isDelete?: boolean;
 }
 
 export interface IInventoryItem {
-  itemAmount: number;
-  _id: string;
+  id: string;
+  quantity: number;
   product: IProduct;
-}
-
-export interface IInventory {
-  _id: string;
-  products: IInventoryItem[];
 }

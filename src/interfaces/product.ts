@@ -1,10 +1,17 @@
 export interface IProduct {
-  _id: string;
-  productId: string;
+  id: string;
   name: string;
   code: string;
-  volume: string;
-  price: string;
+  volume: number;
+  volumeUnit: VolumeUnit;
+  price: number;
   withDevice?: boolean;
   image?: string;
+}
+
+export enum VolumeUnit {
+  ML = 1,
+  L,
+  GR,
+  KG
 }

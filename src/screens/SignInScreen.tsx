@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { COLORS } from '../constants';
 import { PrimaryButton } from '../components/Button';
-import { useCreateUserSessionMutation } from '../services/user';
+import { useCreateUserSessionMutation, useLoginMutation } from '../services/user';
 import { onSignIn } from '../redux/slices/userSlice';
 import { useAppDispatch } from '../utils/hooks';
 
@@ -16,15 +16,17 @@ const SignInScreen = () => {
   const [emailBorderColor, setEmailBorderColor] = useState(COLORS.borderColor);
   const [passwordBorderColor, setPasswordBorderColor] = useState(COLORS.borderColor);
 
-  const [createUserSession, { isError }] = useCreateUserSessionMutation();
+  // const [createUserSession, { isError }] = useCreateUserSessionMutation();
+  const [loginSession, { isError }] = useLoginMutation();
 
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
-    const session = await createUserSession({ email, password }).unwrap();
-    await AsyncStorage.setItem('accessToken', session.accessToken);
-    await AsyncStorage.setItem('refreshToken', session.refreshToken);
-    dispatch(onSignIn(session.accessToken));
+    const session = await loginSession({ email, password }).unwrap();
+
+    await AsyncStorage.setItem('accessToken', session.access_token);
+    // await AsyncStorage.setItem('refreshToken', session.refreshToken);
+    dispatch(onSignIn(session.access_token));
   };
 
   const navigation = useNavigation();

@@ -1,28 +1,31 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { COLORS } from '../../constants';
 import { numberWithCommas } from '../../utils/masks';
 import { useRemoveItemsFromInventoryMutation } from '../../services/inventory';
+import ChangeMenu from './ChangeMenu';
 
 interface InventoryItemProps {
   title: string;
   imgUrl?: string;
-  itemAmount: number;
+  quantity: number;
   code: string;
-  price: string;
+  price: number;
   productId: string;
 }
 
 const { width: screenWidth } = Dimensions.get('screen');
 
-const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, itemAmount, code, price }) => {
+const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, quantity, code, price }) => {
+  const [isChangeOpen, setIsChangeOpen] = useState(false);
+
   const [removeItemsFromInventory] = useRemoveItemsFromInventoryMutation();
 
   const deleteProductHandler = () => {
     const payload = {
       productId,
-      itemAmount,
-      isDelete: true
+      quantity
+      // isDelete: true
     };
     removeItemsFromInventory(payload);
   };
@@ -40,24 +43,20 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, itemA
         </View>
         <View style={styles.mainInfoContainer}>
           <View>
-            <Text style={styles.mainInfoText}>Количество: {itemAmount}</Text>
+            <Text style={styles.mainInfoText}>Количество: {quantity}</Text>
             <Text style={styles.mainInfoText}>Код: #{code}</Text>
           </View>
           <View style={styles.totalPriceContainer}>
-            <Text style={styles.totalPriceText}>{numberWithCommas(Number(price) * itemAmount)} UZS</Text>
+            <Text style={styles.totalPriceText}>{numberWithCommas(Number(price) * quantity)} UZS</Text>
           </View>
         </View>
-        <View style={styles.buttonToolkit}>
-          <Pressable>
-            <View style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Изменить</Text>
-            </View>
+        {isChangeOpen && <ChangeMenu />}
+        <View style={styles.changeContainer}>
+          <View style={styles.halfSeparator}></View>
+          <Pressable onPress={() => setIsChangeOpen(!isChangeOpen)}>
+            <Text style={styles.changeText}>{isChangeOpen ? 'Меньше' : 'Больше'}</Text>
           </Pressable>
-          <Pressable onPress={deleteProductHandler}>
-            <View style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Удалить</Text>
-            </View>
-          </Pressable>
+          <View style={styles.halfSeparator}></View>
         </View>
       </View>
     </View>
@@ -68,27 +67,25 @@ export default InventoryItem;
 
 const styles = StyleSheet.create({
   inventoryItemContainer: {
-    height: 160,
     flexDirection: 'row',
-    alignItems: 'center',
     paddingVertical: 20
   },
   imageContainer: {
-    width: 80,
-    height: 'auto'
+    width: screenWidth * 0.2,
+    maxHeight: 110
   },
   image: {
     flex: 1,
-    height: undefined,
     width: '100%'
   },
   infoContainer: {
     marginLeft: 20,
     flex: 1,
-    height: '100%',
     justifyContent: 'space-between'
   },
-  titleContainer: {},
+  titleContainer: {
+    height: 40
+  },
   titleText: {
     fontSize: 16,
     fontWeight: '700'
@@ -108,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.textLight
   },
-  buttonToolkit: {
+  changeContainer: {
     height: 30,
     flexDirection: 'row',
     alignItems: 'center',
@@ -128,5 +125,15 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.accent,
     fontWeight: '700'
+  },
+  halfSeparator: {
+    height: 1,
+    width: '30%',
+    backgroundColor: COLORS.accent
+  },
+  changeText: {
+    marginHorizontal: 10,
+    color: COLORS.accent,
+    fontWeight: '600'
   }
 });

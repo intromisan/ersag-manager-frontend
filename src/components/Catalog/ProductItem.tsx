@@ -1,5 +1,5 @@
-import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { FC } from 'react';
 import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 import { IProduct } from '../../interfaces/product';
@@ -24,18 +24,18 @@ interface ProductItemProps extends IProduct {
   // _id: string;
 }
 
-const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, price, withDevice, productId, index }) => {
+const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, price, withDevice, id, index }) => {
   // RTK Queries
   const [addOneItemToInventory] = useAddOneItemToInventoryMutation();
 
-  const swipeRightHandler = (productId: string, index: number) => {
-    addOneItemToInventory({ productId, itemAmount: 1 });
+  const swipeRightHandler = (index: number) => {
+    addOneItemToInventory({ productId: id, quantity: 1 });
     row[index].close();
   };
 
   return (
     <GestureHandlerRootView>
-      <Swipeable renderRightActions={RightSwipe} friction={2} rightThreshold={30} ref={(ref) => (row[index] = ref)} onSwipeableOpen={() => swipeRightHandler(productId, index)}>
+      <Swipeable renderRightActions={RightSwipe} friction={2} rightThreshold={30} ref={(ref) => (row[index] = ref)} onSwipeableOpen={() => swipeRightHandler(index)}>
         <View style={styles.productItemContainer}>
           <View style={styles.productImageContainer}>
             <Image source={{ uri: image }} style={styles.productImage} />

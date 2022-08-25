@@ -20,8 +20,15 @@ export const userApi = createApi({
         method: 'POST',
         body: body
       })
+    }),
+    login: build.mutation<IUserSession, Partial<IUser>>({
+      query: (body) => ({
+        url: '/auth/signin',
+        method: 'POST',
+        body: body
+      })
     })
   })
 });
 
-export const { useCreateUserMutation, useCreateUserSessionMutation } = userApi;
+export const { useCreateUserMutation, useCreateUserSessionMutation, useLoginMutation } = userApi;

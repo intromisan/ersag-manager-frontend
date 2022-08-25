@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://ersag-manager.azurewebsites.net/api',
+  baseUrl: 'https://ersag-manager.herokuapp.com/api',
   prepareHeaders: async (headers) => {
     const accessToken = await AsyncStorage.getItem('accessToken');
 

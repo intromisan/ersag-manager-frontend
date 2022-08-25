@@ -1,25 +1,28 @@
 import { IFinance } from '../interfaces/finance';
-import { IAddOneItemPayload, IInventory, IRemoveItemsPayload } from '../interfaces/inventory';
+import { IAddOneItemPayload, IInventoryItem, IRemoveItemsPayload } from '../interfaces/inventory';
 import { appApi } from './appApi';
 
 export const inventoryApi = appApi.injectEndpoints({
   endpoints: (build) => ({
-    getInventoryItems: build.query<IInventory, void>({
-      query: () => '/userInventory',
+    getInventoryItems: build.query<IInventoryItem[], void>({
+      query: () => '/inventoryItem',
       providesTags: ['Inventory']
     }),
-    addOneItemToInventory: build.mutation<IInventory, IAddOneItemPayload>({
-      query: (body) => ({
-        url: '/userInventory/addItem',
-        method: 'PATCH',
-        body
-      }),
+    addOneItemToInventory: build.mutation<IInventoryItem[], IAddOneItemPayload>({
+      query: (body) => {
+        console.log(body);
+        return {
+          url: '/inventoryItem/add',
+          method: 'POST',
+          body
+        };
+      },
       invalidatesTags: ['Inventory', 'Finances']
     }),
-    removeItemsFromInventory: build.mutation<IInventory, IRemoveItemsPayload>({
+    removeItemsFromInventory: build.mutation<IInventoryItem[], IRemoveItemsPayload>({
       query: (body) => ({
-        url: '/userInventory/removeItem',
-        method: 'PATCH',
+        url: '/inventoryItem/remove',
+        method: 'POST',
         body
       }),
       invalidatesTags: ['Inventory', 'Finances']
