@@ -1,5 +1,5 @@
 import { IFinance } from '../interfaces/finance';
-import { IAddOneItemPayload, IInventoryItem, IRemoveItemsPayload } from '../interfaces/inventory';
+import { IAddOneItemPayload, IInventoryItem, IDeleteItemsPayload } from '../interfaces/inventory';
 import { appApi } from './appApi';
 
 export const inventoryApi = appApi.injectEndpoints({
@@ -10,7 +10,6 @@ export const inventoryApi = appApi.injectEndpoints({
     }),
     addOneItemToInventory: build.mutation<IInventoryItem[], IAddOneItemPayload>({
       query: (body) => {
-        console.log(body);
         return {
           url: '/inventoryItem/add',
           method: 'POST',
@@ -19,7 +18,7 @@ export const inventoryApi = appApi.injectEndpoints({
       },
       invalidatesTags: ['Inventory', 'Finances']
     }),
-    removeItemsFromInventory: build.mutation<IInventoryItem[], IRemoveItemsPayload>({
+    removeItemsFromInventory: build.mutation<void, IDeleteItemsPayload>({
       query: (body) => ({
         url: '/inventoryItem/remove',
         method: 'POST',

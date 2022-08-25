@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
 import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
@@ -6,6 +6,7 @@ import { IProduct } from '../../interfaces/product';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useAddOneItemToInventoryMutation } from '../../services/inventory';
+import { getUnitVolume } from '../../utils/masks';
 
 const RightSwipe = () => {
   return (
@@ -24,7 +25,7 @@ interface ProductItemProps extends IProduct {
   // _id: string;
 }
 
-const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, price, withDevice, id, index }) => {
+const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, volumeUnit, price, withDevice, id, index }) => {
   // RTK Queries
   const [addOneItemToInventory] = useAddOneItemToInventoryMutation();
 
@@ -55,7 +56,9 @@ const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, price, w
             <View style={styles.bottom}>
               <View style={styles.productVolume}>
                 <SimpleLineIcons name="drop" size={16} color="#72777E" />
-                <Text style={styles.volumeText}>{volume}</Text>
+                <Text style={styles.volumeText}>
+                  {volume} {getUnitVolume(volumeUnit)}
+                </Text>
               </View>
               <View style={styles.productPrice}>
                 <Ionicons name="ios-pricetag-outline" size={16} color="#72777E" />

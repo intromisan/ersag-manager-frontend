@@ -5,11 +5,9 @@ export interface IAddOneItemPayload {
   quantity: number;
 }
 
-export interface IRemoveItemsPayload {
+export interface IDeleteItemsPayload {
   productId: string;
   quantity: number;
-  isPresent?: boolean;
-  isDelete?: boolean;
 }
 
 export interface IInventoryItem {

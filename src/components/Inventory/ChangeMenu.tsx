@@ -1,12 +1,16 @@
 import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 
 const { width: screenWidth } = Dimensions.get('screen');
 
-const ChangeMenu = () => {
-  const [quantity, setQuantity] = useState('');
+interface ChangeMenuProps {
+  onDelete: (deleteAmount: number) => void;
+}
+
+const ChangeMenu: FC<ChangeMenuProps> = ({ onDelete }) => {
+  const [quantity, setQuantity] = useState('1');
   const [sellPrice, setSellPrice] = useState('');
 
   const [quantityBorderColor, setQuantityBorderColor] = useState(COLORS.borderColor);
@@ -49,7 +53,7 @@ const ChangeMenu = () => {
             <FontAwesome name="gift" size={18} color={COLORS.white} />
           </View>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => onDelete(Number(quantity))}>
           <View style={[styles.buttonContainer, styles.buttonAccentContainer]}>
             <FontAwesome name="trash" size={18} color={COLORS.white} />
           </View>

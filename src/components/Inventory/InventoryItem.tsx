@@ -21,11 +21,10 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, quant
 
   const [removeItemsFromInventory] = useRemoveItemsFromInventoryMutation();
 
-  const deleteProductHandler = () => {
+  const deleteProductHandler = (deleteAmount: number) => {
     const payload = {
       productId,
-      quantity
-      // isDelete: true
+      quantity: deleteAmount
     };
     removeItemsFromInventory(payload);
   };
@@ -50,7 +49,7 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, quant
             <Text style={styles.totalPriceText}>{numberWithCommas(Number(price) * quantity)} UZS</Text>
           </View>
         </View>
-        {isChangeOpen && <ChangeMenu />}
+        {isChangeOpen && <ChangeMenu onDelete={deleteProductHandler} />}
         <View style={styles.changeContainer}>
           <View style={styles.halfSeparator}></View>
           <Pressable onPress={() => setIsChangeOpen(!isChangeOpen)}>
