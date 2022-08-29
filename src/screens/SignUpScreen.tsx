@@ -46,14 +46,14 @@ const SignUpScreen = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
-        <TextInput
+        {/* <TextInput
           placeholder="Имя"
           style={{ ...styles.input, borderColor: nameBorderColor }}
           onFocus={() => setNameBorderColor(COLORS.accent)}
           onBlur={() => setNameBorderColor(COLORS.borderColor)}
           value={name}
           onChangeText={(text) => setName(text)}
-        />
+        /> */}
         <TextInput
           placeholder="Пароль"
           secureTextEntry
@@ -63,7 +63,7 @@ const SignUpScreen = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <TextInput
+        {/* <TextInput
           placeholder="Подтверждение пароля"
           secureTextEntry
           style={{ ...styles.input, borderColor: passwordConfirmationBorderColor }}
@@ -71,7 +71,7 @@ const SignUpScreen = () => {
           onBlur={() => setPasswordConfirmationBorderColor(COLORS.borderColor)}
           value={passwordConfirmation}
           onChangeText={(text) => setPasswordConfirmation(text)}
-        />
+        /> */}
       </View>
       <View style={styles.buttonTooltip}>
         <PrimaryButton text="Зарегистрироваться" pressHandler={() => onSubmit()} />
