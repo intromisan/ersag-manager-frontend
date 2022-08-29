@@ -42,6 +42,7 @@ const SignInScreen = () => {
           onBlur={() => setEmailBorderColor(COLORS.borderColor)}
           value={email}
           onChangeText={(text) => setEmail(text)}
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="Пароль"
@@ -51,6 +52,7 @@ const SignInScreen = () => {
           onBlur={() => setPasswordBorderColor(COLORS.borderColor)}
           value={password}
           onChangeText={(text) => setPassword(text)}
+          autoCapitalize="none"
         />
       </View>
       {isError && (

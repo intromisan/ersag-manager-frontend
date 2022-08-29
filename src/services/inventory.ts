@@ -1,5 +1,5 @@
-import { IFinance } from '../interfaces/finance';
-import { IAddOneItemPayload, IInventoryItem, IDeleteItemsPayload } from '../interfaces/inventory';
+import { IDashboardData } from '../interfaces/finance';
+import { IInventoryItem, IRemoveItemsPayload, IAddItemInventory } from '../interfaces/inventory';
 import { appApi } from './appApi';
 
 export const inventoryApi = appApi.injectEndpoints({
@@ -8,7 +8,7 @@ export const inventoryApi = appApi.injectEndpoints({
       query: () => '/inventoryItem',
       providesTags: ['Inventory']
     }),
-    addOneItemToInventory: build.mutation<IInventoryItem[], IAddOneItemPayload>({
+    addItemInventory: build.mutation<void, IAddItemInventory>({
       query: (body) => {
         return {
           url: '/inventoryItem/add',
@@ -16,17 +16,17 @@ export const inventoryApi = appApi.injectEndpoints({
           body
         };
       },
-      invalidatesTags: ['Inventory', 'Finances']
+      invalidatesTags: ['Inventory', 'Dashboard']
     }),
-    removeItemsFromInventory: build.mutation<void, IDeleteItemsPayload>({
+    removeItemsFromInventory: build.mutation<void, IRemoveItemsPayload>({
       query: (body) => ({
         url: '/inventoryItem/remove',
         method: 'POST',
         body
       }),
-      invalidatesTags: ['Inventory', 'Finances']
+      invalidatesTags: ['Inventory', 'Dashboard']
     })
   })
 });
 
-export const { useAddOneItemToInventoryMutation, useGetInventoryItemsQuery, useRemoveItemsFromInventoryMutation } = inventoryApi;
+export const { useGetInventoryItemsQuery, useRemoveItemsFromInventoryMutation, useAddItemInventoryMutation } = inventoryApi;

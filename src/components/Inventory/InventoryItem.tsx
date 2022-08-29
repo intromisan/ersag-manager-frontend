@@ -24,7 +24,26 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, quant
   const deleteProductHandler = (deleteAmount: number) => {
     const payload = {
       productId,
-      quantity: deleteAmount
+      quantity: deleteAmount,
+      isDelete: true
+    };
+    removeItemsFromInventory(payload);
+  };
+
+  const giftProductHandler = (giftAmount: number) => {
+    const payload = {
+      productId,
+      quantity: giftAmount,
+      isGift: true
+    };
+    removeItemsFromInventory(payload);
+  };
+
+  const saleProductHandler = (saleAmount: number, salePrice: number) => {
+    const payload = {
+      productId,
+      quantity: saleAmount,
+      price: salePrice
     };
     removeItemsFromInventory(payload);
   };
@@ -49,7 +68,7 @@ const InventoryItem: FC<InventoryItemProps> = ({ title, productId, imgUrl, quant
             <Text style={styles.totalPriceText}>{numberWithCommas(Number(price) * quantity)} UZS</Text>
           </View>
         </View>
-        {isChangeOpen && <ChangeMenu onDelete={deleteProductHandler} />}
+        {isChangeOpen && <ChangeMenu onDelete={deleteProductHandler} onGift={giftProductHandler} onSale={saleProductHandler} />}
         <View style={styles.changeContainer}>
           <View style={styles.halfSeparator}></View>
           <Pressable onPress={() => setIsChangeOpen(!isChangeOpen)}>

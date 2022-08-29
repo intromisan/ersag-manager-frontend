@@ -1,15 +1,18 @@
 import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { FC, useState } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
+import { numberWithCommas } from '../../utils/masks';
 
 const { width: screenWidth } = Dimensions.get('screen');
 
 interface ChangeMenuProps {
   onDelete: (deleteAmount: number) => void;
+  onGift: (giftAmount: number) => void;
+  onSale: (saleAmount: number, salePrice: number) => void;
 }
 
-const ChangeMenu: FC<ChangeMenuProps> = ({ onDelete }) => {
+const ChangeMenu: FC<ChangeMenuProps> = ({ onDelete, onGift, onSale }) => {
   const [quantity, setQuantity] = useState('1');
   const [sellPrice, setSellPrice] = useState('');
 
@@ -43,19 +46,19 @@ const ChangeMenu: FC<ChangeMenuProps> = ({ onDelete }) => {
         </View>
       </View>
       <View style={styles.buttonToolbar}>
-        <Pressable>
+        <Pressable onPress={() => onSale(Number(quantity), Number(sellPrice))}>
           <View style={styles.buttonContainer}>
-            <FontAwesome name="dollar" size={18} color={COLORS.white} />
+            <Feather name="dollar-sign" size={18} color={COLORS.white} />
           </View>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => onGift(Number(quantity))}>
           <View style={[styles.buttonContainer, styles.buttonWarningContainer]}>
-            <FontAwesome name="gift" size={18} color={COLORS.white} />
+            <Feather name="gift" size={18} color={COLORS.white} />
           </View>
         </Pressable>
         <Pressable onPress={() => onDelete(Number(quantity))}>
           <View style={[styles.buttonContainer, styles.buttonAccentContainer]}>
-            <FontAwesome name="trash" size={18} color={COLORS.white} />
+            <Feather name="trash" size={18} color={COLORS.white} />
           </View>
         </Pressable>
       </View>

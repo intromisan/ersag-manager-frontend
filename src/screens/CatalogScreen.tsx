@@ -1,12 +1,20 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Button, FlatList, StyleSheet, Text } from 'react-native';
 import PageContainer from '../components/PageContainer';
 import ProductItem from '../components/Catalog/ProductItem';
 import SearchComponent from '../components/SearchComponent';
 import { useGetProductsQuery } from '../services/products';
 
 const CatalogScreen = () => {
-  const { data: products, isLoading } = useGetProductsQuery();
+  const { data: products, isLoading, refetch } = useGetProductsQuery();
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const refreshHandler = async () => {
+    setIsFetching(true);
+    refetch();
+    setIsFetching(false);
+  };
 
   return (
     <PageContainer title={'Каталог'}>
@@ -14,7 +22,14 @@ const CatalogScreen = () => {
       {isLoading ? (
         <Text>Loading</Text>
       ) : (
-        <FlatList showsVerticalScrollIndicator={false} data={products} keyExtractor={(item) => item.id} renderItem={({ item, index }) => <ProductItem index={index} {...item} />} />
+        <FlatList
+          onRefresh={refreshHandler}
+          showsVerticalScrollIndicator={false}
+          data={products}
+          refreshing={isFetching}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => <ProductItem index={index} {...item} />}
+        />
       )}
     </PageContainer>
   );

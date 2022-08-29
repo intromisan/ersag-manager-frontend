@@ -1,5 +1,5 @@
-export interface IFinance {
-  balance: number;
-  discountPercentage: number;
+export interface IDashboardData {
+  userBalance: number;
+  userDiscount: number;
   inventoryTotalValue: number;
 }

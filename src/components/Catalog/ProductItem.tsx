@@ -1,20 +1,39 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
-import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
+import { SimpleLineIcons, Ionicons, Feather } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 import { IProduct } from '../../interfaces/product';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { useAddOneItemToInventoryMutation } from '../../services/inventory';
 import { getUnitVolume } from '../../utils/masks';
+import { useAddItemInventoryMutation } from '../../services/inventory';
 
-const RightSwipe = () => {
+interface RightSwipeProps {
+  index: number;
+  onBuyPressed: (index: number) => void;
+  onGiftPressed: (index: number) => void;
+}
+
+const RightSwipe: FC<RightSwipeProps> = ({ index, onGiftPressed, onBuyPressed }) => {
   return (
-    <View style={styles.rightSwipeContainer}>
-      <View style={styles.rightSwipeItemContainer}>
-        <Text style={styles.rightSwipeText}>+</Text>
-      </View>
-    </View>
+    <>
+      <Pressable onPress={() => onBuyPressed(index)}>
+        <View style={[styles.rightSwipeContainer, styles.primary]}>
+          <View style={styles.rightSwipeItemContainer}>
+            <Feather name="dollar-sign" style={styles.rightSwipeIcon} />
+            <Text style={styles.rightSwipeText}>Покупка</Text>
+          </View>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => onGiftPressed(index)}>
+        <View style={[styles.rightSwipeContainer, styles.warning]}>
+          <View style={styles.rightSwipeItemContainer}>
+            <Feather name="gift" style={styles.rightSwipeIcon} />
+            <Text style={styles.rightSwipeText}>Подарок</Text>
+          </View>
+        </View>
+      </Pressable>
+    </>
   );
 };
 
@@ -22,21 +41,32 @@ let row: Array<any> = [];
 
 interface ProductItemProps extends IProduct {
   index: number;
-  // _id: string;
 }
 
 const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, volumeUnit, price, withDevice, id, index }) => {
   // RTK Queries
-  const [addOneItemToInventory] = useAddOneItemToInventoryMutation();
+  const [addItemInventory] = useAddItemInventoryMutation();
 
-  const swipeRightHandler = (index: number) => {
-    addOneItemToInventory({ productId: id, quantity: 1 });
+  const onAddGift = (index: number) => {
+    addItemInventory({
+      productId: id,
+      quantity: 1,
+      isGift: true
+    });
+    row[index].close();
+  };
+
+  const onBuyAdd = (index: number) => {
+    addItemInventory({
+      productId: id,
+      quantity: 1
+    });
     row[index].close();
   };
 
   return (
     <GestureHandlerRootView>
-      <Swipeable renderRightActions={RightSwipe} friction={2} rightThreshold={30} ref={(ref) => (row[index] = ref)} onSwipeableOpen={() => swipeRightHandler(index)}>
+      <Swipeable renderRightActions={() => <RightSwipe index={index} onGiftPressed={onAddGift} onBuyPressed={onBuyAdd} />} friction={2} rightThreshold={30} ref={(ref) => (row[index] = ref)}>
         <View style={styles.productItemContainer}>
           <View style={styles.productImageContainer}>
             <Image source={{ uri: image }} style={styles.productImage} />
@@ -55,13 +85,13 @@ const ProductItem: FC<ProductItemProps> = ({ name, image, code, volume, volumeUn
             </Text>
             <View style={styles.bottom}>
               <View style={styles.productVolume}>
-                <SimpleLineIcons name="drop" size={16} color="#72777E" />
+                <SimpleLineIcons name="drop" size={16} color={COLORS.textLight} />
                 <Text style={styles.volumeText}>
                   {volume} {getUnitVolume(volumeUnit)}
                 </Text>
               </View>
               <View style={styles.productPrice}>
-                <Ionicons name="ios-pricetag-outline" size={16} color="#72777E" />
+                <Ionicons name="ios-pricetag-outline" size={16} color={COLORS.textLight} />
                 <Text style={styles.priceText}>{price} UZS</Text>
               </View>
             </View>
@@ -146,22 +176,29 @@ const styles = StyleSheet.create({
   },
   rightSwipeContainer: {
     backgroundColor: COLORS.white,
+    height: 120,
     width: 100,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 8
   },
+  warning: {
+    backgroundColor: COLORS.warning
+  },
+  primary: {
+    backgroundColor: COLORS.accent
+  },
   rightSwipeItemContainer: {
-    width: 50,
-    height: 50,
-    backgroundColor: COLORS.accent,
-    borderRadius: 25,
+    width: 100,
     marginHorizontal: 'auto',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
+  },
+  rightSwipeIcon: {
+    color: COLORS.white,
+    fontSize: 32,
+    marginBottom: 10
   },
   rightSwipeText: {
-    color: COLORS.white,
-    fontSize: 32
+    color: COLORS.white
   }
 });
