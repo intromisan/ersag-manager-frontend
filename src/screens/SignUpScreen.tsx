@@ -44,6 +44,7 @@ const SignUpScreen = () => {
           onFocus={() => setEmailBorderColor(COLORS.accent)}
           onBlur={() => setEmailBorderColor(COLORS.borderColor)}
           value={email}
+          autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
         />
         {/* <TextInput
@@ -61,6 +62,7 @@ const SignUpScreen = () => {
           onFocus={() => setPasswordBorderColor(COLORS.accent)}
           onBlur={() => setPasswordBorderColor(COLORS.borderColor)}
           value={password}
+          autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         />
         {/* <TextInput
