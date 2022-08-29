@@ -10,16 +10,8 @@ const ListSeparator = () => {
 };
 
 const InventoryScreen = () => {
-  const [isFetching, setIsFetching] = useState(false);
-
-  const refreshHandler = async () => {
-    setIsFetching(true);
-    refetch();
-    setIsFetching(false);
-  };
-
   // RTK Queries
-  const { data: inventory, isLoading, refetch } = useGetInventoryItemsQuery();
+  const { data: inventory, isLoading, refetch, isFetching } = useGetInventoryItemsQuery();
 
   return (
     <PageContainer title="Инвентарь">
@@ -30,7 +22,7 @@ const InventoryScreen = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={inventory}
-          onRefresh={refreshHandler}
+          onRefresh={refetch}
           refreshing={isFetching}
           keyExtractor={(item) => item.id}
           ItemSeparatorComponent={ListSeparator}

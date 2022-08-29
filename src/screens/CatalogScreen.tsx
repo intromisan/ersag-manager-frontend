@@ -6,15 +6,7 @@ import SearchComponent from '../components/SearchComponent';
 import { useGetProductsQuery } from '../services/products';
 
 const CatalogScreen = () => {
-  const { data: products, isLoading, refetch } = useGetProductsQuery();
-
-  const [isFetching, setIsFetching] = useState(false);
-
-  const refreshHandler = async () => {
-    setIsFetching(true);
-    refetch();
-    setIsFetching(false);
-  };
+  const { data: products, isLoading, refetch, isFetching } = useGetProductsQuery();
 
   return (
     <PageContainer title={'Каталог'}>
@@ -23,7 +15,7 @@ const CatalogScreen = () => {
         <Text>Loading</Text>
       ) : (
         <FlatList
-          onRefresh={refreshHandler}
+          onRefresh={refetch}
           showsVerticalScrollIndicator={false}
           data={products}
           refreshing={isFetching}
